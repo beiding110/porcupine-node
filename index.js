@@ -5,7 +5,8 @@ const app = express();
 
 const conf = require('./config');
 const appUrl = require('./router')(app);
-// require('./ping');
+
+require('./ping');
 
 app.use('/static',express.static(__dirname + '/static'));
 

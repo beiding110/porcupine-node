@@ -1,3 +1,0 @@
-[2019-06-12T16:03:56.022][ERROR  65620  log_file] In This Test log-dir is : './logs/log_test/'
-[2019-06-12T17:25:25.736][ERROR  45420  log_file] problem with request: connect ECONNREFUSED 127.0.0.1:10086
-[2019-06-12T17:26:48.102][ERROR  68008  log_file] problem with request: connect ECONNREFUSED 127.0.0.1:80
