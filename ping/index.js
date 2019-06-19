@@ -3,8 +3,10 @@ var Clocker = require('./Clocker.js');
 
 var Cookie = 'PHPSESSID=iiffnmpkpcltraia3bqfa7d8t6',
     sdate = '2019-06-23',
+    startTime = '11:24',
+    startTimeRange = [-1, 1],
 
-    loopTimes = 5,//请求次数'infinity'为无限请求
+    loopTimes = 'infinity',//请求次数'infinity'为无限请求
     rps = 1000;//每秒请求次数
 
 var test = new Pinger({
@@ -42,27 +44,21 @@ var getTeacher = new Pinger({
 });
 
 new Clocker({
-    time: '22:40',
-    range: [-1, 1],
-    callback() {
-        console.log('clocker!');
+    time: startTime,
+    range: startTimeRange,
+    start(run) {
+        console.log('+ clocker is starting pinging');
+        run({
+            rps,
+            times: loopTimes,
+            callback(index) {
+                // test.action();
+                console.log(index);
+            }
+        })
+    },
+    end(stop) {
+        stop();
+        console.log('- clocker is stopping pinging');
     }
-})
-
-function run() {
-    var si = setInterval(function() {
-
-        // test.action();
-        // saveClass.action();
-        // getTeacher.action();
-
-        if(loopTimes !== 'infinity') {
-            loopTimes --;
-            if(!loopTimes) {
-                clearInterval(si);
-            };
-        }
-    }, 1000 / rps);
-};
-
-run();
+});
