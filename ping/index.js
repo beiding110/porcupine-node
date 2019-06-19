@@ -3,8 +3,8 @@ var Clocker = require('./Clocker.js');
 
 var Cookie = 'PHPSESSID=iiffnmpkpcltraia3bqfa7d8t6',
     sdate = '2019-06-23',
-    startTime = '11:24',
-    startTimeRange = [-1, 1],
+    startTime = '10:00',
+    startTimeRange = [-10, 10],
 
     loopTimes = 'infinity',//请求次数'infinity'为无限请求
     rps = 1000;//每秒请求次数
@@ -19,7 +19,7 @@ var test = new Pinger({
     }
 });
 
-var saveClass = new Pinger({
+var saveClass5 = new Pinger({
     url: 'http://duyc.jxoaxt.com/order/save',
     headers: {
         Cookie
@@ -28,6 +28,17 @@ var saveClass = new Pinger({
         teacherid:'3',
         sdate,
         time:'5',
+        exam:'3'
+    }
+}), saveClass6 = new Pinger({
+    url: 'http://duyc.jxoaxt.com/order/save',
+    headers: {
+        Cookie
+    },
+    form: {
+        teacherid:'3',
+        sdate,
+        time:'6',
         exam:'3'
     }
 });
@@ -53,6 +64,12 @@ new Clocker({
             times: loopTimes,
             callback(index) {
                 // test.action();
+                //
+                // getTeacher.action();
+
+                saveClass5.action();
+                saveClass6.action();
+
                 console.log(index);
             }
         })

@@ -8,15 +8,20 @@ function Pinger(obj) {
 
 Pinger.prototype = {
     init: function(obj) {
-        this.ajax = function() {
-            request.post(obj, function(error, response, body) {
-                logger.info('BODY: ' + body + `( ${JSON.stringify(obj)} )`);
-                if (!error && response.statusCode == 200) {}
-            });
-        };
+        this.$settings = obj;
     },
     action: function() {
-        this.ajax();
+        var ts = new Date().getTime(),
+            cloneObj = JSON.parse(JSON.stringify(this.$settings));
+            url = this.$settings.url;
+
+        url = /\?/.test(url) ? url + '&ts=' + ts : url + '?ts=' + ts;
+        cloneObj.url = url;
+
+        request.post(cloneObj, (error, response, body) => {
+            logger.info('BODY: ' + body + `( ${JSON.stringify(cloneObj)} )`);
+            if (!error && response.statusCode == 200) {}
+        });
     }
 }
 
