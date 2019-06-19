@@ -1,7 +1,5 @@
-var http = require('http');
-var qs = require('querystring');
-const logger = require('../log');
-var request = require('request');
+var Pinger = require('./Pinger.js');
+var Clocker = require('./Clocker.js');
 
 var Cookie = 'PHPSESSID=iiffnmpkpcltraia3bqfa7d8t6',
     sdate = '2019-06-23',
@@ -9,44 +7,54 @@ var Cookie = 'PHPSESSID=iiffnmpkpcltraia3bqfa7d8t6',
     loopTimes = 5,//请求次数'infinity'为无限请求
     rps = 1000;//每秒请求次数
 
-function getTeacher() {
-    request.post({
-        url: 'http://duyc.jxoaxt.com/order/getteacherbyexam',
-        headers: {
-            Cookie
-        },
-        form: {
-            exam: 3,
-            page: 1
-        }
-    }, function(error, response, body) {
-        logger.info('BODY: ' + body);
-        if (!error && response.statusCode == 200) {}
-    });
-};
+var test = new Pinger({
+    url: 'http://localhost:1101',
+    headers: {
+        Cookie
+    },
+    form: {
 
-function saveClass() {
-    request.post({
-        url: 'http://duyc.jxoaxt.com/order/save',
-        headers: {
-            Cookie
-        },
-        form: {
-            teacherid:'3',
-            sdate,
-            time:'5',
-            exam:'3'
-        }
-    }, function(error, response, body) {
-        logger.info('BODY: ' + body);
-        if (!error && response.statusCode == 200) {}
-    });
-};
+    }
+});
+
+var saveClass = new Pinger({
+    url: 'http://duyc.jxoaxt.com/order/save',
+    headers: {
+        Cookie
+    },
+    form: {
+        teacherid:'3',
+        sdate,
+        time:'5',
+        exam:'3'
+    }
+});
+
+var getTeacher = new Pinger({
+    url: 'http://duyc.jxoaxt.com/order/getteacherbyexam',
+    headers: {
+        Cookie
+    },
+    form: {
+        exam: 3,
+        page: 1
+    }
+});
+
+new Clocker({
+    time: '22:40',
+    range: [-1, 1],
+    callback() {
+        console.log('clocker!');
+    }
+})
 
 function run() {
     var si = setInterval(function() {
 
-        saveClass();
+        // test.action();
+        // saveClass.action();
+        // getTeacher.action();
 
         if(loopTimes !== 'infinity') {
             loopTimes --;
@@ -57,4 +65,4 @@ function run() {
     }, 1000 / rps);
 };
 
-// run();
+run();
