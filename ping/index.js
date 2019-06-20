@@ -1,10 +1,10 @@
 var Pinger = require('./Pinger.js');
 var Clocker = require('./Clocker.js');
 
-var Cookie = 'PHPSESSID=iiffnmpkpcltraia3bqfa7d8t6',
+var Cookie = 'PHPSESSID=tt7ijqgktggs03sgt57644tim6',
     sdate = '2019-06-23',
-    startTime = '10:00',
-    startTimeRange = [-10, 10],
+    startTime = '09:00',
+    startTimeRange = [-5, 5],
 
     loopTimes = 'infinity',//请求次数'infinity'为无限请求
     rps = 1000;//每秒请求次数

@@ -82,6 +82,7 @@ Clocker.prototype = {
                     this.$startRunned = true;
                 }
             };
+            // console.log('ls-running')
         }, 100);
     },
     run: function(settings) {
