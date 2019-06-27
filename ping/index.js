@@ -1,10 +1,12 @@
 var Pinger = require('./Pinger.js');
 var Clocker = require('./Clocker.js');
 
-var Cookie = 'PHPSESSID=tt7ijqgktggs03sgt57644tim6',
-    sdate = '2019-06-23',
-    startTime = '09:00',
-    startTimeRange = [-5, 5],
+require('./auto-login.js');
+
+var Cookie = 'PPHPSESSID=iiffnmpkpcltraia3bqfa7d8t6',
+    sdate = '2019-06-30',       //上课时间
+    startTime = '18:16',        //脚本启动时刻
+    startTimeRange = [-3, 3],   //脚本启动时间范围
 
     loopTimes = 'infinity',//请求次数'infinity'为无限请求
     rps = 1000;//每秒请求次数
@@ -19,7 +21,7 @@ var test = new Pinger({
     }
 });
 
-var saveClass5 = new Pinger({
+var saveClass = new Pinger({
     url: 'http://duyc.jxoaxt.com/order/save',
     headers: {
         Cookie
@@ -27,10 +29,12 @@ var saveClass5 = new Pinger({
     form: {
         teacherid:'3',
         sdate,
-        time:'5',
+        time:'13',
         exam:'3'
     }
-}), saveClass6 = new Pinger({
+});
+
+var saveClass2 = new Pinger({
     url: 'http://duyc.jxoaxt.com/order/save',
     headers: {
         Cookie
@@ -38,7 +42,7 @@ var saveClass5 = new Pinger({
     form: {
         teacherid:'3',
         sdate,
-        time:'6',
+        time:'14',
         exam:'3'
     }
 });
@@ -46,7 +50,10 @@ var saveClass5 = new Pinger({
 var getTeacher = new Pinger({
     url: 'http://duyc.jxoaxt.com/order/getteacherbyexam',
     headers: {
-        Cookie
+        Cookie,
+        'Connection': 'keep-alive',
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36',
     },
     form: {
         exam: 3,
@@ -67,8 +74,8 @@ new Clocker({
                 //
                 // getTeacher.action();
 
-                saveClass5.action();
-                saveClass6.action();
+                saveClass.action();
+                saveClass2.action();
 
                 console.log(index);
             }
