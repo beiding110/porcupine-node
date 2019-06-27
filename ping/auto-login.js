@@ -1,5 +1,7 @@
 const tsObj = require('tesseract.js');
 var request = require('request');
+let fs = require('fs');
+
 const logger = require('../log');
 
 const TesseractWorker = tsObj.TesseractWorker;
@@ -15,10 +17,23 @@ var loginData = {
 
 function autoLogin() {
 
+    let httpStream = request({
+        method: 'GET',
+        url: 'http://duyc.jxoaxt.com/login/verify'
+    });
+    let writeStream = fs.createWriteStream('./download/verify.png');
+
+    httpStream.pipe(writeStream);
+
+    writeStream.on('close', () => {
+        console.log('download finished');
+    });
+
     request.get({
-        url: 'http://duyc.jxoaxt.com/login',
+        // url: 'http://duyc.jxoaxt.com/login/login',
+        url: 'http://duyc.jxoaxt.com/login/verify',
     }, (error, response, body) => {
-        // logger.info('BODY: ' + body);
+        logger.info('BODY: ' + body);
 
         cookie = cookie ? cookie : response.headers['set-cookie'][0];
 
